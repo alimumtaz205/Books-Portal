@@ -1,4 +1,5 @@
 using BookPortalAPI.Repositories;
+using BookPortalAPI.Repositories.Books;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.HttpsPolicy;
@@ -29,10 +30,10 @@ namespace BookPortalAPI
         {
 
             services.AddControllers();
-            services.AddSingleton<IBookRepository, BookRepository>();
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<IAuthorRepository, AuthorRepository>();
             services.AddSingleton<IFinanceRepository, FinanceRepository>();
+            services.AddSingleton<IBookRepository, BookRepository>();
            
             services.AddSwaggerGen(c =>
             {
