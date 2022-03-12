@@ -9,10 +9,4 @@
     <PackageReference Include="Swashbuckle.AspNetCore" Version="5.6.3" />
   </ItemGroup>
 
-  <ItemGroup>
-    <Folder Include="Models\Booksale\Request\" />
-    <Folder Include="Models\Booksale\Response\" />
-    <Folder Include="Repositories\Booksale\" />
-  </ItemGroup>
-
 </Project>
