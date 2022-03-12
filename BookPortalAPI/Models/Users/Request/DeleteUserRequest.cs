@@ -3,12 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookPortalAPI.Models.Responses
+namespace BookPortalAPI.Models.Users.Request
 {
-    public class GetUserResponse : BaseResponse
+    public class DeleteUserRequest
     {
-        public User user { get; set; }
-
         public string userName { get; set; }
     }
 }

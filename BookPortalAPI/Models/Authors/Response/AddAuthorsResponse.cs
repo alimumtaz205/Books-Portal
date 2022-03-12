@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookPortalAPI.Repositories
+namespace BookPortalAPI.Models.Authors.Response
 {
-    public class BookRepository : IBookRepository
+    public class AddAuthorsResponse : BaseResponse
     {
     }
 }

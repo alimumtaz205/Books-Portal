@@ -1,5 +1,6 @@
-﻿using BookPortalAPI.Models.Requests;
-using BookPortalAPI.Models.Responses;
+﻿using BookPortalAPI.Models;
+using BookPortalAPI.Models.Users.Request;
+using BookPortalAPI.Models.Users.Response;
 using BookPortalAPI.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using System;
@@ -30,36 +31,34 @@ namespace BookPortalAPI.Controllers
             GetUserResponse response = new GetUserResponse();
             try
             {
-
-                response = _userRepository.GetUser();
+                response =  _userRepository.GetUser();
             }
             catch (Exception ex)
             {
-               // _GlobalInfo.LogError(ex, "GetDevices/DeviceMgtController", "1001", "", JsonConvert.SerializeObject(request));
-                // res.IsSuccess = false; set by default false
+                response.IsSuccess = false;
                 response.Message = ex.Message.ToString();
-                //response.tranCode = Common.TransactionCodes.GET_DEVICE_ERROR;
+               // response.ResCode = Convert.ToString((int)TranCodes.Exception);
             }
 
             return Ok(response);
         }
 
-        [Route("[action/id]")]
-        [HttpGet]
-        public async Task<IActionResult> GetUserById(GetUserRequest req)
+        [HttpPost]
+        [Route("add")]
+        public async Task<IActionResult> AddUser([FromBody] AddUserRequest request)
         {
-            GetUserResponse response = new GetUserResponse();
+            AddUserResponse response = new AddUserResponse();
             try
             {
-
-                response = _userRepository.GetUserById(req);
+                response = _userRepository.AddUser(request);
+                // response.ResCode = C;
+                //response.IsSuccess = true;
+                //response.Message = "Success";
             }
             catch (Exception ex)
             {
-                // _GlobalInfo.LogError(ex, "GetDevices/DeviceMgtController", "1001", "", JsonConvert.SerializeObject(request));
-                // res.IsSuccess = false; set by default false
                 response.Message = ex.Message.ToString();
-                //response.tranCode = Common.TransactionCodes.GET_DEVICE_ERROR;
+               // response.ResCode = Convert.ToString((int)TranCodes.Exception);
             }
 
             return Ok(response);
@@ -67,66 +66,36 @@ namespace BookPortalAPI.Controllers
 
         [Route("[action]")]
         [HttpPost]
-        public async Task<IActionResult> AddUser(GetUserRequest req)
+        public async Task<IActionResult> DeleteUser([FromBody] DeleteUserRequest request)
         {
-            GetUserResponse response = new GetUserResponse();
+            DeleteUserResponse response = new DeleteUserResponse();
             try
             {
-
-                response = _userRepository.AddUser(req);
+                response = _userRepository.DeleteUser(request);
             }
             catch (Exception ex)
             {
-                // _GlobalInfo.LogError(ex, "GetDevices/DeviceMgtController", "1001", "", JsonConvert.SerializeObject(request));
-                // res.IsSuccess = false; set by default false
                 response.Message = ex.Message.ToString();
-                //response.tranCode = Common.TransactionCodes.GET_DEVICE_ERROR;
+                //response.ResCode = TransactionCodes.DELETE_BUNDLE_ERROR;
             }
-
             return Ok(response);
         }
 
         [Route("[action]")]
-        [HttpDelete]
-        public async Task<IActionResult> DeleteUser(GetUserRequest req)
+        [HttpPost]
+        public async Task<IActionResult> UpdateUser([FromBody] UpdateUserRequest request)
         {
-            GetUserResponse response = new GetUserResponse();
+            UpdateUserResponse response = new UpdateUserResponse();
             try
             {
-
-                response = _userRepository.DeleteUser(req);
+                response = _userRepository.UpdateUser(request);
             }
             catch (Exception ex)
             {
-                // _GlobalInfo.LogError(ex, "GetDevices/DeviceMgtController", "1001", "", JsonConvert.SerializeObject(request));
-                // res.IsSuccess = false; set by default false
                 response.Message = ex.Message.ToString();
-                //response.tranCode = Common.TransactionCodes.GET_DEVICE_ERROR;
+                //response.ResCode = Common.TransactionCodes.UPDATE_ACTIVITY_ERROR;
             }
-
             return Ok(response);
         }
-
-        [Route("[action]")]
-        [HttpPut]
-        public async Task<IActionResult> UpdateUser(GetUserRequest req)
-        {
-            GetUserResponse response = new GetUserResponse();
-            try
-            {
-
-                response = _userRepository.UpdateUser(req);
-            }
-            catch (Exception ex)
-            {
-                // _GlobalInfo.LogError(ex, "GetDevices/DeviceMgtController", "1001", "", JsonConvert.SerializeObject(request));
-                // res.IsSuccess = false; set by default false
-                response.Message = ex.Message.ToString();
-                //response.tranCode = Common.TransactionCodes.GET_DEVICE_ERROR;
-            }
-
-            return Ok(response);
-        }
-
     }
 }

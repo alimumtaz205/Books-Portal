@@ -29,7 +29,10 @@ namespace BookPortalAPI
         {
 
             services.AddControllers();
+            services.AddSingleton<IBookRepository, BookRepository>();
             services.AddSingleton<IUserRepository, UserRepository>();
+            services.AddSingleton<IAuthorRepository, AuthorRepository>();
+           
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BookPortalAPI", Version = "v1" });

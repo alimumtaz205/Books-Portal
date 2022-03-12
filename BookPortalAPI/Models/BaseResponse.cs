@@ -7,7 +7,7 @@ namespace BookPortalAPI.Models
 {
     public class BaseResponse
     {
-        //public TransactionCodes tranCode { get; set; }
+        public TransactionCodes tranCode { get; set; }
         public bool IsSuccess { get; set; } = false;
         public string Message { get; set; }
         public object Data { get; set; }

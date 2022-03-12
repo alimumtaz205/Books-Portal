@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookPortalAPI.Models
+namespace BookPortalAPI.Models.Users.Request
 {
-    public class GetUsers
+    public class AddUserRequest
     {
         public string userName { get; set; }
         public string fullName { get; set; }

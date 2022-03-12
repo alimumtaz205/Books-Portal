@@ -3,17 +3,12 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookPortalAPI.Models.Requests
+namespace BookPortalAPI.Models.Users
 {
-    public class GetUserRequest 
+    public class Users
     {
-        public User user { get; set; }
-        ///<example> MediaPad 7 Youth 2</example>
         public string userName { get; set; }
-        ///<example></example>
         public string fullName { get; set; }
-
-        ///<example> </example>
         public string uPassword { get; set; }
     }
 }
