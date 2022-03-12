@@ -32,6 +32,7 @@ namespace BookPortalAPI
             services.AddSingleton<IBookRepository, BookRepository>();
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<IAuthorRepository, AuthorRepository>();
+            services.AddSingleton<IFinanceRepository, FinanceRepository>();
            
             services.AddSwaggerGen(c =>
             {

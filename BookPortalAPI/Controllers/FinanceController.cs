@@ -1,5 +1,5 @@
-﻿using BookPortalAPI.Models.Authors.Request;
-using BookPortalAPI.Models.Authors.Response;
+﻿using BookPortalAPI.Models.Finance.Request;
+using BookPortalAPI.Models.Finance.Response;
 using BookPortalAPI.Repositories;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
@@ -12,23 +12,24 @@ namespace BookPortalAPI.Controllers
 {
     [Route("api/[controller]")]
     [ApiController]
-    public class AuthorsController : ControllerBase
+    public class FinanceController : ControllerBase
     {
-        private readonly IAuthorRepository _authorRepository;
 
-        public AuthorsController(IAuthorRepository authorRepository)
+        private readonly IFinanceRepository _financeRepository;
+
+        public FinanceController(IFinanceRepository financeRepository)
         {
-            _authorRepository = authorRepository;
+            _financeRepository = financeRepository;
         }
 
         [Route("[action]")]
         [HttpGet]
-        public async Task<IActionResult> GetAuthors()
+        public async Task<IActionResult> GetFinance()
         {
-            GetAuthorsResponse response = new GetAuthorsResponse();
+            GetFinanceResponse response = new GetFinanceResponse();
             try
             {
-                response = _authorRepository.GetAuthors();
+                response = _financeRepository.GetFinance();
             }
             catch (Exception ex)
             {
@@ -40,14 +41,14 @@ namespace BookPortalAPI.Controllers
             return Ok(response);
         }
 
-        [Route("[action]")]
         [HttpPost]
-        public async Task<IActionResult> AddAuthor([FromBody] AddAuthorsRequest request)
+        [Route("add")]
+        public async Task<IActionResult> AddFinance([FromBody] AddFinanceRequest request)
         {
-            AddAuthorsResponse response = new AddAuthorsResponse();
+            AddFinanceResponse response = new AddFinanceResponse();
             try
             {
-                response = _authorRepository.AddAuthor(request);
+                response = _financeRepository.AddFinance(request);
                 // response.ResCode = C;
                 //response.IsSuccess = true;
                 //response.Message = "Success";
@@ -63,12 +64,12 @@ namespace BookPortalAPI.Controllers
 
         [Route("[action]")]
         [HttpPost]
-        public async Task<IActionResult> DeleteAuthor([FromBody] DeleteAuthorRequest request)
+        public async Task<IActionResult> DeleteFinance([FromBody] DeleteFinanceRequest request)
         {
-            DeleteAuthorResponse response = new DeleteAuthorResponse();
+            DeleteFinanceResponse response = new DeleteFinanceResponse();
             try
             {
-                response = _authorRepository.DeleteAuthor(request);
+                response = _financeRepository.DeleteFinance(request);
             }
             catch (Exception ex)
             {
@@ -80,12 +81,12 @@ namespace BookPortalAPI.Controllers
 
         [Route("[action]")]
         [HttpPost]
-        public async Task<IActionResult> UpdateAuthor([FromBody] UpdateAuthorRequest request)
+        public async Task<IActionResult> UpdateFinance([FromBody] UpdateFinanceRequest request)
         {
-            UpdateAuthorsResponse response = new UpdateAuthorsResponse();
+            UpdateFinanceResponse response = new UpdateFinanceResponse();
             try
             {
-                response = _authorRepository.UpdateAuthor(request);
+                response = _financeRepository.UpdateFinance(request);
             }
             catch (Exception ex)
             {

@@ -7,5 +7,7 @@ namespace BookPortalAPI.Repositories
     {
        public GetAuthorsResponse GetAuthors();
        public AddAuthorsResponse AddAuthor(AddAuthorsRequest request);
+       public DeleteAuthorResponse DeleteAuthor(DeleteAuthorRequest request);
+       public UpdateAuthorsResponse UpdateAuthor(UpdateAuthorRequest request);
     }
 }

@@ -13,8 +13,6 @@
     <Folder Include="Models\Booksale\Request\" />
     <Folder Include="Models\Booksale\Response\" />
     <Folder Include="Models\Books\Request\" />
-    <Folder Include="Models\Finance\Request\" />
-    <Folder Include="Models\Finance\Response\" />
     <Folder Include="Repositories\Booksale\" />
   </ItemGroup>
 

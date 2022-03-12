@@ -178,5 +178,151 @@ namespace BookPortalAPI.Repositories
             return new AddAuthorsResponse { IsSuccess = isSuccess, Message = Message };
 
         }
+
+        public DeleteAuthorResponse DeleteAuthor(DeleteAuthorRequest request)
+        {
+            /*.............................................................
+                  PROCEDURE `PRC_AUTHORS_DELETE`(
+						IN AUTHORID int(100),
+						OUT PCODE varchar(2),
+                        OUT PDESC varchar(1000),
+						OUT PMSG  varchar(2)                                                  
+)
+                ............................................................. */
+
+            #region Variables
+            DataTable dt = new DataTable();
+            MySqlCommand cmd = null;
+            MySqlConnection con = null;
+            bool isSuccess = false;
+            string Message = string.Empty;
+          //  TranCodes tranCode = TranCodes.Exception;
+
+            #endregion 
+
+            try
+            {
+                var aa = _configuration.GetConnectionString("CONN_STR");
+                using (cmd = new MySqlCommand("PRC_AUTHORS_DELETE", con = new MySqlConnection(_configuration.GetConnectionString("CONN_STR"))))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+                    //input
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "AUTHORID", Value = request.authorId, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 1000 });
+
+                    //output
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "pCODE", MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Output, Size = 100 });
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "pDESC", MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Output, Size = 100 });
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "pMSG", MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Output, Size = 100 });
+
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+
+                    if (Convert.ToString(cmd.Parameters["PCODE"].Value) == "00" || Convert.ToString(cmd.Parameters["PCODE"].Value) == "0")
+                    {
+                        isSuccess = true;
+                       // tranCode = TranCodes.Success;
+                        Message = Convert.ToString(cmd.Parameters["PDESC"].Value);
+                    }
+                    else
+                    {
+                        Message = Convert.ToString(cmd.Parameters["PDESC"].Value);
+                    }
+
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (con != null) { con.Close(); con.Dispose(); }
+            }
+
+            return new DeleteAuthorResponse { IsSuccess = isSuccess, Message = Message };
+
+        }
+
+        public UpdateAuthorsResponse UpdateAuthor(UpdateAuthorRequest request)
+        {
+
+            /*.........................................................................
+                     PROCEDURE `PCR_AUTHORS_UPDATE`(
+						IN AUTHORID INT,
+                        IN FIRSTNAME varchar(1000),
+                        IN MIDDLENAME varchar(100),
+                        IN LASTENAME varchar(100),
+						IN AUTHORNAME varchar(100),
+						IN BIOGRAPHY varchar(100),
+						IN PICTURE blob(500),
+						OUT PCODE varchar(2),
+                        OUT PDESC varchar(1000),
+						OUT PMSG  varchar(2)    )
+             .............................................................................*/
+
+
+            #region variable  
+
+            DataTable dt = new DataTable();
+            MySqlCommand cmd = null;
+            MySqlConnection con = null;
+            bool isSuccess = false;
+            string Message = string.Empty;
+            
+            #endregion
+
+
+            try
+            {
+                var aa = _configuration.GetConnectionString("CONN_STR");
+                using (cmd = new MySqlCommand("PCR_AUTHORS_UPDATE", con = new MySqlConnection(_configuration.GetConnectionString("CONN_STR"))))
+                {
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    //input
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "AUTHORID", Value = request.authorId, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "FIRSTNAME", Value = request.firstName, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "MIDDLENAME", Value = request.middleName, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "LASTNAME", Value = request.lastName, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "AUTHORNAME", Value = request.authorName, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "BIOGRAPHY", Value = request.biography, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "PICTURE", Value = request.picture, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
+
+
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "PCODE", MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Output, Size = 1000 });
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "PDESC", MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Output, Size = 1000 });
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "PMSG", MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Output, Size = 1000 });
+
+
+                    con.Open();
+                    cmd.ExecuteNonQuery();
+                    con.Close();
+
+                    if (Convert.ToString(cmd.Parameters["PCODE"].Value) == "00" || Convert.ToString(cmd.Parameters["PCODE"].Value) == "0")
+                    {
+                        isSuccess = true;
+                       // tranCode = TranCodes.Success;
+                        Message = Convert.ToString(cmd.Parameters["PDESC"].Value);
+                    }
+                    else
+                    {
+                        Message = Convert.ToString(cmd.Parameters["PDESC"].Value);
+                    }
+
+                }
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (con != null) { con.Close(); con.Dispose(); }
+            }
+
+            return new UpdateAuthorsResponse { IsSuccess = isSuccess, Message = Message };
+
+        }
     }
 }

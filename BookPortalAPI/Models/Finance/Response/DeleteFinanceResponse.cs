@@ -3,9 +3,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace BookPortalAPI.Models.Authors.Response
+namespace BookPortalAPI.Models.Finance.Response
 {
-    public class DeleteAuthorsResponse : BaseResponse
+    public class DeleteFinanceResponse:BaseResponse
     {
     }
 }
