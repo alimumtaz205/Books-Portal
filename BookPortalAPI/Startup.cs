@@ -31,6 +31,7 @@ namespace BookPortalAPI
         {
 
             services.AddControllers();
+            services.AddSingleton<ILoginRepository, LoginRepository>();
             services.AddSingleton<IUserRepository, UserRepository>();
             services.AddSingleton<IAuthorRepository, AuthorRepository>();
             services.AddSingleton<IFinanceRepository, FinanceRepository>();

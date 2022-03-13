@@ -42,7 +42,7 @@ namespace BookPortalAPI.Repositories
             MySqlConnection con = null;
 
 
-            List<Users> ListUsers = new List<Users>();
+            List<UsersModel> ListUsers = new List<UsersModel>();
 
             try
             {
@@ -70,7 +70,7 @@ namespace BookPortalAPI.Repositories
 
                             foreach (DataRow dr in dt.Rows)
                             {
-                                Users obj = new Users();
+                                UsersModel obj = new UsersModel();
 
                                 obj.userName = Convert.ToString(dr["userName"]);
                                 obj.fullName = Convert.ToString(dr["fullName"]);

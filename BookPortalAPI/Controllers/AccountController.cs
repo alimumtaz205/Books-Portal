@@ -23,12 +23,12 @@ namespace BookPortalAPI.Controllers
 
         [Route("[action]")]
         [HttpPost]
-        public async Task<IActionResult> LoginUser([FromBody] LoginRequest request)
+        public async Task<IActionResult> LoginUser([FromBody] LoginUserRequest request)
         {
-            BaseResponse response = new BaseResponse();
+            LoginUserResponse response = new LoginUserResponse();
             try
             {
-                response = await _IloginRepository.LoginUser(request);
+                response = _IloginRepository.LoginUser(request);
             }
             catch (Exception ex)
             {

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BookPortalAPI.Models
 {
-    public class LoginRequest
+    public class LoginUserRequest
     {
         /// <example>mumtazali</example>
         [Required(ErrorMessage = "UserName Required")]

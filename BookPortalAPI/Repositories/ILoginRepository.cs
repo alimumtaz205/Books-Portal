@@ -8,6 +8,6 @@ namespace BookPortalAPI.Repositories
 {
     public interface ILoginRepository
     {
-        public Task<BaseResponse> LoginUser(LoginRequest request);
+        public LoginUserResponse LoginUser(LoginUserRequest request);
     }
 }

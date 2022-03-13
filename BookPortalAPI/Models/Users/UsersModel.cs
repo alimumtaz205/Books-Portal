@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace BookPortalAPI.Models.Users
 {
-    public class Users
+    public class UsersModel
     {
         public string userName { get; set; }
         public string fullName { get; set; }
