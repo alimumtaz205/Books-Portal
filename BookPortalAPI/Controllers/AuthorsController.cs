@@ -42,6 +42,26 @@ namespace BookPortalAPI.Controllers
 
         [Route("[action]")]
         [HttpPost]
+        public async Task<IActionResult> GetAuthorsByUsername(GetAuthorsRequest req)
+        {
+            GetAuthorsResponse response = new GetAuthorsResponse();
+            try
+            {
+                response = _authorRepository.GetAuthorsByUsername(req);
+            }
+            catch (Exception ex)
+            {
+                response.IsSuccess = false;
+                response.Message = ex.Message.ToString();
+                // response.ResCode = Convert.ToString((int)TranCodes.Exception);
+            }
+
+            return Ok(response);
+        }
+
+
+        [Route("[action]")]
+        [HttpPost]
         public async Task<IActionResult> AddAuthor([FromBody] AddAuthorsRequest request)
         {
             AddAuthorsResponse response = new AddAuthorsResponse();

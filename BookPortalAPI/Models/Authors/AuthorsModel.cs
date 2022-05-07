@@ -8,6 +8,7 @@ namespace BookPortalAPI.Models.Authors
     public class AuthorsModel
     {
         public int authorId { get; set; }
+        public string userName { get; set; }
         public string firstName { get; set; }
         public string middleName { get; set; }
         public string lastName { get; set; }

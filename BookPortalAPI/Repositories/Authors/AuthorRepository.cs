@@ -26,7 +26,7 @@ namespace BookPortalAPI.Repositories
         public GetAuthorsResponse GetAuthors()
         {
             /* ........................................................................
-           PROCEDURE `PRC_AUTHORS_GET`(
+           PROCEDURE `PRC_AUTHORS_GET_ALL`(
                        OUT PCODE varchar(2),
                        OUT PDESC varchar(1000),
                        OUT PMSG  varchar(2)
@@ -40,7 +40,7 @@ namespace BookPortalAPI.Repositories
 
             try
             {
-                using (cmd = new MySqlCommand("PRC_AUTHORS_GET", con = new MySqlConnection(_configuration.GetConnectionString("CONN_STR"))))
+                using (cmd = new MySqlCommand("PRC_AUTHORS_GET_ALL", con = new MySqlConnection(_configuration.GetConnectionString("CONN_STR"))))
 
                 {
 
@@ -67,6 +67,85 @@ namespace BookPortalAPI.Repositories
                                 AuthorsModel obj = new AuthorsModel();
 
                                 obj.authorId = Convert.ToInt32(dr["authorId"]);
+                                obj.userName = Convert.ToString(dr["userName"]);
+                                obj.firstName = Convert.ToString(dr["firstName"]);
+                                obj.middleName = Convert.ToString(dr["middleName"]);
+                                obj.lastName = Convert.ToString(dr["lastName"]);
+                                obj.authorName = Convert.ToString(dr["authorName"]);
+                                obj.biography = Convert.ToString(dr["biography"]);
+                                obj.picture = System.Text.Encoding.UTF8.GetBytes("picture");
+                                AuthorsList.Add(obj);
+                            }
+                        }
+                        isSuccess = true;
+                        //tranCode = TranCodes.Success;
+                        Message = Convert.ToString(cmd.Parameters["PDESC"].Value);
+                    }
+                    else
+                    {
+                        Message = Convert.ToString(cmd.Parameters["PDESC"].Value);
+                    }
+                }
+
+            }
+            catch (Exception)
+            {
+                throw;
+            }
+            finally
+            {
+                if (con != null) { con.Close(); con.Dispose(); }
+            }
+            return new GetAuthorsResponse { IsSuccess = isSuccess, Message = Message, Data = AuthorsList };
+        }
+
+        public GetAuthorsResponse GetAuthorsByUsername(GetAuthorsRequest req)
+        {
+            /* ........................................................................
+           PROCEDURE `PRC_AUTHORS_GET`(
+			                IN `PUSERNAME` VARCHAR(100), 
+                            OUT `PCODE` VARCHAR(2), 
+                            OUT `PDESC` VARCHAR(1000), 
+                            OUT `PMSG` VARCHAR(2))
+            ........................................................................ */
+
+            DataTable dt = new DataTable();
+            MySqlCommand cmd = null;
+            MySqlConnection con = null;
+
+            List<AuthorsModel> AuthorsList = new List<AuthorsModel>();
+
+            try
+            {
+                using (cmd = new MySqlCommand("PRC_AUTHORS_GET", con = new MySqlConnection(_configuration.GetConnectionString("CONN_STR"))))
+
+                {
+
+                    cmd.CommandType = CommandType.StoredProcedure;
+
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "PUSERNAME", Value = req.userName, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "PCODE", MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Output, Size = 1000 });
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "PDESC", MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Output, Size = 1000 });
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "PMSG", MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Output, Size = 1000 });
+
+
+                    con.Open();
+                    MySqlDataAdapter myDA = new MySqlDataAdapter(cmd);
+                    myDA.Fill(dt);
+                    con.Close();
+
+
+                    if (Convert.ToString(cmd.Parameters["PCODE"].Value) == "00" || Convert.ToString(cmd.Parameters["PCODE"].Value) == "0")
+                    {
+                        if (dt != null && dt.Rows.Count > 0)
+                        {
+
+                            foreach (DataRow dr in dt.Rows)
+                            {
+                                AuthorsModel obj = new AuthorsModel();
+
+                                obj.authorId = Convert.ToInt32(dr["authorId"]);
+                                obj.userName = Convert.ToString(dr["userName"]);
                                 obj.firstName = Convert.ToString(dr["firstName"]);
                                 obj.middleName = Convert.ToString(dr["middleName"]);
                                 obj.lastName = Convert.ToString(dr["lastName"]);
@@ -101,17 +180,18 @@ namespace BookPortalAPI.Repositories
         public AddAuthorsResponse AddAuthor(AddAuthorsRequest request)
         {
             /*.........................................................................
-                       PROCEDURE `PRC_AUTHORS_ADD`(
-						IN AUTHORID varchar(1000),
-                        IN FIRSTNAME varchar(1000),
-                        IN MIDDLENAME varchar(100),
-                        IN LASTENAME varchar(100),
-						IN AUTHORNAME varchar(100),
-						IN BIOGRAPHY varchar(100),
-						IN PICTURE blob(500),
-						OUT PCODE varchar(2),
-                        OUT PDESC varchar(1000),
-						OUT PMSG  varchar(2)    )
+                    PROCEDURE `PRC_AUTHORS_ADD`(
+						IN `PUSERNAME` VARCHAR(1000), 
+                        IN `PAPASSWORS` VARCHAR(1000), 
+                        IN `PFIRSTNAME` VARCHAR(1000), 
+                        IN `PMIDDLENAME` VARCHAR(100), 
+                        IN `PLASTNAME` VARCHAR(100), 
+                        IN `PAUTHORNAME` VARCHAR(100), 
+                        IN `PBIOGRAPHY` VARCHAR(100), 
+                        IN `PPICTURE` VARCHAR(500), 
+                        OUT `PCODE` VARCHAR(2), 
+                        OUT `PDESC` VARCHAR(1000), 
+                        OUT `PMSG` VARCHAR(2))
              .............................................................................*/
 
 
@@ -135,13 +215,15 @@ namespace BookPortalAPI.Repositories
                     cmd.CommandType = CommandType.StoredProcedure;
 
                     //input
-                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "AUTHORID", Value = request.authorId, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
-                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "FIRSTNAME", Value = request.firstName, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
-                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "MIDDLENAME", Value = request.middleName, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
-                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "LASTNAME", Value = request.lastName, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
-                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "AUTHORNAME", Value = request.authorName, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
-                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "BIOGRAPHY", Value = request.biography, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
-                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "PICTURE", Value = request.picture, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "PUSERNAME", Value = request.userName, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "PAPASSWORS", Value = request.authorPass, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
+                    //cmd.Parameters.Add(new MySqlParameter { ParameterName = "AUTHORID", Value = request.authorId, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "PFIRSTNAME", Value = request.firstName, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "PMIDDLENAME", Value = request.middleName, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "PLASTNAME", Value = request.lastName, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "PAUTHORNAME", Value = request.authorName, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "PBIOGRAPHY", Value = request.biography, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
+                    cmd.Parameters.Add(new MySqlParameter { ParameterName = "PPICTURE", Value = request.picture, MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Input, Size = 100 });
 
 
                     cmd.Parameters.Add(new MySqlParameter { ParameterName = "PCODE", MySqlDbType = MySqlDbType.VarChar, Direction = ParameterDirection.Output, Size = 1000 });

@@ -7,8 +7,10 @@ namespace BookPortalAPI.Models.Authors.Request
 {
     public class AddAuthorsRequest
     {
-        public int authorId { get; set; }
+       // public int authorId { get; set; }
+        public string userName { get; set; }
         public string firstName { get; set; }
+        public string authorPass { get; set; }
         public string middleName { get; set; }
         public string lastName { get; set; }
         public string authorName { get; set; }

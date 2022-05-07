@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio Version 16
-VisualStudioVersion = 16.0.32106.194
+# Visual Studio Version 17
+VisualStudioVersion = 17.1.32414.318
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookPortalAPI", "BookPortalAPI\BookPortalAPI.csproj", "{774C4957-2793-4B5D-87FE-ACD6A4679896}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "BookPortalAPI", "BookPortalAPI\BookPortalAPI.csproj", "{774C4957-2793-4B5D-87FE-ACD6A4679896}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "BookPortal", "BookPortal\BookPortal.csproj", "{B5CAC090-9715-4136-BE40-CD57E45F7276}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{774C4957-2793-4B5D-87FE-ACD6A4679896}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{774C4957-2793-4B5D-87FE-ACD6A4679896}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{774C4957-2793-4B5D-87FE-ACD6A4679896}.Release|Any CPU.Build.0 = Release|Any CPU
+		{B5CAC090-9715-4136-BE40-CD57E45F7276}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B5CAC090-9715-4136-BE40-CD57E45F7276}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B5CAC090-9715-4136-BE40-CD57E45F7276}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B5CAC090-9715-4136-BE40-CD57E45F7276}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
