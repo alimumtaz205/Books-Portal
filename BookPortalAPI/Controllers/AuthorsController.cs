@@ -47,7 +47,7 @@ namespace BookPortalAPI.Controllers
             GetAuthorsResponse response = new GetAuthorsResponse();
             try
             {
-                response = _authorRepository.GetAuthorsByUsername(req);
+                 response = _authorRepository.GetAuthorsByUsername(req);
             }
             catch (Exception ex)
             {
@@ -62,7 +62,7 @@ namespace BookPortalAPI.Controllers
 
         [Route("[action]")]
         [HttpPost]
-        public async Task<IActionResult> AddAuthor([FromBody] AddAuthorsRequest request)
+        public IActionResult AddAuthor([FromBody] AddAuthorsRequest request)
         {
             AddAuthorsResponse response = new AddAuthorsResponse();
             try

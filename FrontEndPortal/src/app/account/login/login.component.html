@@ -1,0 +1,42 @@
+
+	<div class="form-container sign-up-container">
+		<form>
+			
+			<span>or use your email for registration</span>
+			<input type="text" id="name" placeholder="Name" />
+           
+         	<input type="email" placeholder="Email" />
+			<input type="password" placeholder="Password" />
+			<button>Sign Up</button>
+		</form>
+	</div>
+	<div class="form-container sign-in-container">
+        <form [formGroup]="loginForm" (ngSubmit)="onSubmit(loginForm.value)">
+            <h1>Sign in</h1>
+			<input formControlName="userName" id="userName" placeholder="Username" type="text">
+            <!-- <div *ngIf="userName.errors?.['required']">Name is required.
+            </div> -->
+
+			<input formControlName="uPassword" id="uPassword" placeholder="Password" type="password">
+           <!-- <div *ngIf="uPassword.errors?.['required']">Name is required.
+            </div> --> 
+
+            <a href="#">Forgot your password?</a>
+            <button class="btn btn-primary" type="submit" [disabled]="!loginForm.valid">Login</button>
+        </form>
+	</div>x`x
+	<div class="overlay-container">
+		<div class="overlay">
+			<div class="overlay-panel overlay-left">
+				<h1>Welcome Back!</h1>
+				<p>To keep connected with us please login with your personal info</p>
+				<button class="ghost" id="signIn">Sign In</button>
+			</div>
+			<div class="overlay-panel overlay-right">
+                <img _ngcontent-ng-cli-universal-c2="" alt="logo" class="logo" src="assets/images/logo.png" width="83">
+				<h1>Books Portal</h1>
+				<p>If You are a new user Please Enter your details here</p>
+				<button class="ghost" id="signUp">Sign Up</button>
+			</div>
+		</div>
+	</div>

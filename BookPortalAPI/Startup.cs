@@ -37,7 +37,8 @@ namespace BookPortalAPI
             services.AddSingleton<IFinanceRepository, FinanceRepository>();
             services.AddSingleton<IBookRepository, BookRepository>();
             services.AddSingleton<IBookSaleRepository, BookSaleRepository>();
-           
+
+            services.AddCors();
             services.AddSwaggerGen(c =>
             {
                 c.SwaggerDoc("v1", new OpenApiInfo { Title = "BookPortalAPI", Version = "v1" });
@@ -53,6 +54,10 @@ namespace BookPortalAPI
                 app.UseSwagger();
                 app.UseSwaggerUI(c => c.SwaggerEndpoint("/swagger/v1/swagger.json", "BookPortalAPI v1"));
             }
+
+            app.UseCors(options => 
+            options.AllowAnyOrigin().AllowAnyMethod().AllowAnyHeader()
+            );
 
             app.UseHttpsRedirection();
 
